@@ -1,0 +1,87 @@
+/* style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #401fe2;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+}
+
+#logo {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    height: 50px;
+}
+
+main {
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #131313;
+}
+
+form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input[type="text"],
+input[type="datetime-local"],
+textarea,
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+#statusTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#statusTable th, #statusTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#statusTable th {
+    background-color: #f2f2f2;
+}
+
+canvas {
+    margin-top: 20px;
+}

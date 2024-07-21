@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoramento de Equipamentos</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.4.0/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Relatório de Equipamentos HME</h1>
+        <img src="https://www.vrenergia.com.br/imagens/clientes/cliente-19.png" alt="Logo da VR Energia" id="logo">
+    </header>
+    <main>
+        <section id="equipments">
+            <h2>Equipamentos</h2>
+            <!-- Formulário para atualizar status dos equipamentos -->
+            <form id="statusForm">
+                <label for="tag">Tag do Equipamento:</label>
+                <select id="tag" name="tag" required></select>
+
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                    <option value="PARADO">PARADO</option>
+                    <option value="OBSERVAÇÃO">OBSERVAÇÃO</option>
+                    <option value="LIBERADO">LIBERADO</option>
+                </select>
+
+                <div id="faultDetails" style="display: none;">
+                    <label for="faultType">Tipo de Falha:</label>
+                    <select id="faultType" name="faultType">
+                        <option value="CORRETIVA">CORRETIVA</option>
+                        <option value="PREVENTIVA">PREVENTIVA</option>
+                        <option value="FALHA OPERACIONAL">FALHA OPERACIONAL</option>
+                        <option value="MANUTENÇÃO POR OPORTUNIDADE">MANUTENÇÃO POR OPORTUNIDADE</option>
+                        <option value="ACIDENTE">ACIDENTE</option>
+                        <option value="OUTRO">OUTRO</option>
+                    </select>
+                    <label id="customFaultTypeLabel" for="customFaultType" style="display: none;">Descrição da Natureza da Falha:</label>
+                    <input id="customFaultType" type="text" name="customFaultType" style="display: none;">
+                    <label for="faultDescription">Descrição da Falha:</label>
+                    <textarea id="faultDescription" name="faultDescription"></textarea>
+                </div>
+
+                <label for="mechanic">Mecânico:</label>
+                <input type="text" id="mechanic" name="mechanic" required>
+
+                <label for="serviceDescription">Descrição do Serviço:</label>
+                <textarea id="serviceDescription" name="serviceDescription" required></textarea>
+
+                <label for="startDate">Data e Hora de Início:</label>
+                <input type="datetime-local" id="startDate" name="startDate" required>
+
+                <label for="endDate">Data e Hora de Fim:</label>
+                <input type="datetime-local" id="endDate" name="endDate" required>
+
+                <button type="submit">Atualizar Status</button>
+            </form>
+        </section>
+
+        <section id="report">
+            <h2>Relatório</h2>
+            <table id="statusTable">
+                <thead>
+                    <tr>
+                        <th>Frota</th>
+                        <th>Tag</th>
+                        <th>Status</th>
+                        <th>Mecânico</th>
+                        <th>Descrição do Serviço</th>
+                        <th>Natureza da Falha</th>
+                        <th>Data e Hora de Início</th>
+                        <th>Data e Hora de Fim</th>
+                        <th>Duração (Horas)</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <canvas id="statusChart" width="400" height="200"></canvas>
+
+            <button id="exportButton">Exportar para CSV</button>
+            <button id="pdfButton">Exportar para PDF</button>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
