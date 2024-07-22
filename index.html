@@ -3,87 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitoramento de Equipamentos</title>
+    <title>Relatório de Equipamentos</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.4.0/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
     <header>
+        <img src="https://www.vrenergia.com.br/imagens/clientes/cliente-19.png" alt="Logo da Empresa" class="logo">
         <h1>Relatório de Equipamentos HME</h1>
-        <img src="https://www.vrenergia.com.br/imagens/clientes/cliente-19.png" alt="Logo da VR Energia" id="logo">
     </header>
     <main>
         <section id="equipments">
             <h2>Equipamentos</h2>
-            <!-- Formulário para atualizar status dos equipamentos -->
             <form id="statusForm">
-                <label for="tag">Tag do Equipamento:</label>
-                <select id="tag" name="tag" required></select>
-
-                <label for="status">Status:</label>
-                <select id="status" name="status" required>
-                    <option value="PARADO">PARADO</option>
-                    <option value="OBSERVAÇÃO">OBSERVAÇÃO</option>
-                    <option value="LIBERADO">LIBERADO</option>
-                </select>
-
-                <div id="faultDetails" style="display: none;">
+                <div class="form-row">
+                    <label for="tag">Tag do Equipamento:</label>
+                    <select id="tag" name="tag" required>
+                        <option value="" disabled selected>Selecione a Tag</option>
+                        <option value="CG01">CG01</option>
+                        <option value="CG03">CG03</option>
+                        <option value="CG04">CG04</option>
+                        <option value="JB01">JB01</option>
+                        <option value="JB02">JB02</option>
+                        <option value="JB04">JB04</option>
+                        <option value="JB05">JB05</option>
+                        <option value="SB01">SB01</option>
+                        <option value="SB02">SB02</option>
+                        <option value="SB03">SB03</option>
+                        <option value="SB04">SB04</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="initialStatus">Status Inicial:</label>
+                    <select id="initialStatus" name="initialStatus" required>
+                        <option value="" disabled selected>Selecione o Status Inicial</option>
+                        <option value="PARADO">PARADO</option>
+                        <option value="OBSERVAÇÃO">OBSERVAÇÃO</option>
+                        <option value="LIBERADO">LIBERADO</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="finalStatus">Status Final:</label>
+                    <select id="finalStatus" name="finalStatus" required>
+                        <option value="" disabled selected>Selecione o Status Final</option>
+                        <option value="PARADO">PARADO</option>
+                        <option value="OBSERVAÇÃO">OBSERVAÇÃO</option>
+                        <option value="LIBERADO">LIBERADO</option>
+                    </select>
+                </div>
+                <div class="form-row" id="faultDetails" style="display: none;">
                     <label for="faultType">Tipo de Falha:</label>
                     <select id="faultType" name="faultType">
-                        <option value="CORRETIVA">CORRETIVA</option>
-                        <option value="PREVENTIVA">PREVENTIVA</option>
-                        <option value="FALHA OPERACIONAL">FALHA OPERACIONAL</option>
-                        <option value="MANUTENÇÃO POR OPORTUNIDADE">MANUTENÇÃO POR OPORTUNIDADE</option>
-                        <option value="ACIDENTE">ACIDENTE</option>
-                        <option value="OUTRO">OUTRO</option>
+                        <option value="" disabled selected>Selecione a Natureza da Falha</option>
+                        <option value="FO">Falha Operacional</option>
+                        <option value="MP">Manutenção Preventiva</option>
+                        <option value="MC">Manutenção Corretiva</option>
+                        <option value="FM">Falha de Manutenção</option>
+                        <option value="MO">Manutenção por Oportunidade</option>
                     </select>
-                    <label id="customFaultTypeLabel" for="customFaultType" style="display: none;">Descrição da Natureza da Falha:</label>
-                    <input id="customFaultType" type="text" name="customFaultType" style="display: none;">
                     <label for="faultDescription">Descrição da Falha:</label>
                     <textarea id="faultDescription" name="faultDescription"></textarea>
                 </div>
-
-                <label for="mechanic">Mecânico:</label>
-                <input type="text" id="mechanic" name="mechanic" required>
-
-                <label for="serviceDescription">Descrição do Serviço:</label>
-                <textarea id="serviceDescription" name="serviceDescription" required></textarea>
-
-                <label for="startDate">Data e Hora de Início:</label>
-                <input type="datetime-local" id="startDate" name="startDate" required>
-
-                <label for="endDate">Data e Hora de Fim:</label>
-                <input type="datetime-local" id="endDate" name="endDate" required>
-
-                <button type="submit">Atualizar Status</button>
+                <div class="form-row">
+                    <label for="startDateTime">Data e Hora de Início:</label>
+                    <input type="datetime-local" id="startDateTime" name="startDateTime" required>
+                </div>
+                <div class="form-row">
+                    <label for="endDateTime">Data e Hora de Fim:</label>
+                    <input type="datetime-local" id="endDateTime" name="endDateTime" required>
+                </div>
+                <button type="submit">Adicionar Registro</button>
             </form>
         </section>
-
         <section id="report">
             <h2>Relatório</h2>
-            <table id="statusTable">
+            <table id="dataTable">
                 <thead>
                     <tr>
-                        <th>Frota</th>
                         <th>Tag</th>
-                        <th>Status</th>
-                        <th>Mecânico</th>
-                        <th>Descrição do Serviço</th>
-                        <th>Natureza da Falha</th>
-                        <th>Data e Hora de Início</th>
-                        <th>Data e Hora de Fim</th>
+                        <th>Status Inicial</th>
+                        <th>Status Final</th>
+                        <th>Tipo de Falha</th>
+                        <th>Descrição</th>
+                        <th>Início</th>
+                        <th>Fim</th>
                         <th>Duração (Horas)</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
             </table>
-
-            <canvas id="statusChart" width="400" height="200"></canvas>
-
-            <button id="exportButton">Exportar para CSV</button>
-            <button id="pdfButton">Exportar para PDF</button>
+            <button id="exportPDF">Exportar para PDF</button>
+            <button id="exportCSV">Exportar para CSV</button>
         </section>
     </main>
     <script src="script.js"></script>
